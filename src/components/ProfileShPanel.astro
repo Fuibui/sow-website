@@ -1,0 +1,32 @@
+---
+import Panel from './Panel.astro';
+import TerminalPrompt from './TerminalPrompt.astro';
+import { socials, projects, skills } from '../data/site';
+---
+
+<Panel title="profile.sh">
+	<TerminalPrompt command="./run_socials.sh" />
+	<ul class="links">
+		{socials.map((link) => (
+			<li>
+				<a href={link.href} target="_blank" rel="noopener noreferrer">
+					{link.label}
+				</a>
+			</li>
+		))}
+	</ul>
+
+	<TerminalPrompt command="./projects.bat" />
+	<ul class="plain">
+		{projects.map((project) => (
+			<li>{project}</li>
+		))}
+	</ul>
+
+	<TerminalPrompt command="./skills.txt" />
+	<div>
+		{skills.map((skill) => (
+			<span class="skill-tag">{skill}</span>
+		))}
+	</div>
+</Panel>

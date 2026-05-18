@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 160" fill="none">
+  <rect width="240" height="160" fill="#111"/>
+  <path d="M40 120 L80 80 L120 100 L160 60 L200 90 L200 130 L40 130 Z" fill="#1a1a1a" stroke="#54086b" stroke-width="1"/>
+  <circle cx="120" cy="95" r="6" fill="#d014ff"/>
+  <text x="120" y="150" text-anchor="middle" fill="#555" font-family="monospace" font-size="10">map placeholder</text>
+</svg>

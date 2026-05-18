@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+
+:root {
+    --bg: #0a0a0a;
+    --green: #d014ff;
+    --dim-green: #54086b;
+    --pink: #f069ff;
+    --white: #e8e8e8;
+    --grey: #555;
+    --card-bg: #0a0a0a;
+    --border: #222;
+    --status-color: #57F287;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    min-height: 100vh;
+    padding: 24px;
+}
+
+
+body::before {
+    content: '';
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.07) 2px,
+        rgba(0,0,0,0.07) 4px
+    );
+    z-index: 9999;
+}
+
+
+.grid {
+    display: grid;
+    grid-template-columns: 300px 1fr; /* Explicit left panel width & flexible right column */
+    gap: 16px;
+    max-width: 1100px;
+    margin: 0 auto;
+    align-items: stretch; /* Forces left and right columns to have identical full-height */
+    min-height: calc(100vh - 60px); 
+}
+
+.left-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-left {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    position: relative;
+    height: 100%; /* Spans the full height of the grid container */
+}
+
+.right-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.panel {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    position: relative;
+    height: 100%; 
+}
+
+
+.panel-header {
+    font-family: 'VT323', monospace;
+    font-size: 18px;
+    color: var(--grey);
+    border-bottom: 1px solid var(--border);
+    padding: 6px 12px;
+    letter-spacing: 2px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-header .dots span {
+    display: inline-block;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    margin-left: 5px;
+}
+
+.dots .d1 { background: #6bf580; }
+.dots .d2 { background: #ecc062; }
+.dots .d3 { background: #fa746c; }
+
+.panel-body { padding: 14px; }
+
+.prompt { color: var(--pink); font-size: 12px; margin: 10px 0 4px; }
+.prompt span { color: var(--white); }
+
+
+#ascii-canvas {
+    display: block;
+    image-rendering: pixelated;
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+}
+
+.pfp-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.status-dot {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--status-color);
+}
+
+.discord-name {
+    text-align: center;
+    font-family: 'VT323', monospace;
+    font-size: 26px;
+    color: var(--green);
+}
+
+.discord-sub {
+    text-align: center;
+    font-size: 12px;
+    color: var(--grey);
+    margin-top: 2px;
+    margin-bottom: 10px;
+}
+
+
+ul.plain { list-style: none; }
+ul.plain a { color: var(--white); text-decoration: none; }
+ul.plain a:hover { color: var(--green); }
+
+li { padding: 2px 0; }
+li::before { content: '> '; color: var(--green); }
+
+.about-val { color: var(--white); line-height: 1.6; }
+.about-val a { color: var(--white); text-decoration: none; }
+.about-val a:hover { text-decoration: underline; color: var(--pink); }

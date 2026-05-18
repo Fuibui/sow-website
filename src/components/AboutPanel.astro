@@ -1,0 +1,22 @@
+---
+import Panel from './Panel.astro';
+import TerminalPrompt from './TerminalPrompt.astro';
+import { about, posts } from '../data/site';
+---
+
+<Panel title="about.sh">
+	<TerminalPrompt command="./aboutme.txt" />
+	<p class="about-val">
+		{about.age} | {about.location}
+		<br />
+		<a href={`mailto:${about.email}`}>{about.email}</a>
+	</p>
+	<TerminalPrompt command="./posts.eml" />
+	<ul class="plain">
+		{posts.map((post) => (
+			<li>
+				<a href={post.href}>{post.label}</a>
+			</li>
+		))}
+	</ul>
+</Panel>

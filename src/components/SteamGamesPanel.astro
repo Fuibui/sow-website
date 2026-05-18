@@ -1,0 +1,33 @@
+---
+import TerminalPrompt from './TerminalPrompt.astro';
+import GamesTree from './GamesTree.astro';
+import type { SteamGame } from '../lib/steam';
+
+interface Props {
+	games: SteamGame[];
+	error?: string | null;
+}
+
+const { games, error = null } = Astro.props;
+---
+
+<div class="right-bottom panel">
+	<div class="panel-header">
+		steam_stats.exe
+		<div class="dots">
+			<span class="d1"></span><span class="d2"></span><span class="d3"></span>
+		</div>
+	</div>
+	<div class="panel-body">
+		<TerminalPrompt command="./games_tree.js" prefix="sow@sow:~/steam-stats$" />
+		{
+			error ? (
+				<div class="tree-root">
+					<span class="error-line">{error}</span>
+				</div>
+			) : (
+				<GamesTree games={games} />
+			)
+		}
+	</div>
+</div>

@@ -1,0 +1,10 @@
+---
+interface Props {
+	command: string;
+	prefix?: string;
+}
+
+const { command, prefix = 'sow@sow:~$' } = Astro.props;
+---
+
+<div class="prompt">{prefix} <span>{command}</span></div>

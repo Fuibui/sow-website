@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sow.lol</title>
+    <link rel="icon" href="assets/img/icon.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+<div class="grid">
+
+    <!-- esquerda-->
+    <div class="left-col">
+
+        <!-- image.png -->
+        <div class="panel">
+            <div class="panel-header">
+                image.png
+                <div class="dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+            </div>
+            <div class="panel-body">
+                <div class="pfp-wrapper">
+                    <canvas id="ascii-canvas"></canvas>
+                    <div class="status-dot" id="statusDot"></div>
+                </div>
+                <div class="discord-name" id="discordUser">@sowisgone</div>
+                <div class="discord-sub">on Discord</div>
+            </div>
+        </div>
+
+        <!-- profile.sh -->
+        <div class="panel">
+            <div class="panel-header">
+                profile.sh
+                <div class="dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+            </div>
+            <div class="panel-body">
+                <div class="prompt">sow@sow:~$ <span>./run_socials.sh</span></div>
+                <ul class="links">
+                    <li><a href="https://twitter.com/sowisgone" target="_blank">twitter</a></li>
+                    <li><a href="https://ytjobs.co/talent/profile/528200?r=386" target="_blank">yt_jobs</a></li>
+                    <li><a href="https://steamcommunity.com/id/sowisgone/" target="_blank">steam</a></li>
+                    <li><a href="https://twitch.tv/sowisgonexd" target="_blank">twitch</a></li>
+                </ul>
+
+                <div class="prompt">sow@sow:~$ <span>./projects.bat</span></div>
+                <ul class="plain">
+                    <li>sweety inc, a pc tweaker</li>
+                    <li>skulldye, a game</li>
+                    
+                </ul>
+
+                <div class="prompt">sow@sow:~$ <span>./skills.txt</span></div>
+                <div>
+                    <span class="skill-tag">js</span>
+                    <span class="skill-tag">writting</span>
+                    <span class="skill-tag">mcfunction</span>
+                    <span class="skill-tag">bat</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- about.sh -->
+    <div class="right-top">
+
+        <div class="panel">
+            <div class="panel-header">
+                about.sh
+                <div class="dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+            </div>
+            <div class="panel-body">
+                <div class="prompt">sow@sow:~$ <span>./aboutme.txt</span></div>
+                <p class="about-val">
+                    18y | Brazil, PR <br>
+                    <a href="mailto:sowisgone@gmail.com">sowisgone@gmail.com</a>
+                </p>
+                <div class="prompt">sow@sow:~$ <span>./posts.eml</span></div>
+                <ul class="plain">
+                     <li><a href="assets/blogposting/blog.html" target="_blank">blog</a></li>
+                </ul>
+                
+            </div>
+        </div>
+
+    <!-- mapa -->
+        <div class="panel">
+            <div class="panel-header">
+                map.png
+                <div class="dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+            </div>
+            <div class="panel-body">
+                <div class="flag-row">
+                    +55 ** *****-****
+                </div>
+                <img class="map-img" src="assets/img/map.webp" alt="map">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jogos steam arvore -->
+    <div class="right-bottom panel">
+        <div class="panel-header">
+            steam_stats.exe
+            <div class="dots"><span class="d1"></span><span class="d2"></span><span class="d3"></span></div>
+        </div>
+        <div class="panel-body">
+            <div class="prompt">sow@sow:~/steam-stats$ <span>./games_tree.js</span></div>
+            <div id="gamesTree" class="tree-root">
+                <span class="blink" style="color:var(--green)">fetching data_</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- pfp imagem -->
+<img id="pfpSrc" crossorigin="anonymous" src="https://cdn.discordapp.com/avatars/616731583386353665/3cf8e7d45f8a9bdcfd24a819824c40ce.png?size=256" style="display:none">
+
+<script src="assets/js/user.js"></script>
+</body>
+</html>

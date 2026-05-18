@@ -1,0 +1,40 @@
+---
+import type { SteamGame } from '../lib/steam';
+
+interface Props {
+	games: SteamGame[];
+}
+
+const { games } = Astro.props;
+---
+
+<div class="tree-root">
+	{
+		games.length === 0 ? (
+			<span class="error-line">no games found.</span>
+		) : (
+			games.map((game, index) => {
+				const isLast = index === games.length - 1;
+				return (
+					<div class="branch">
+						<div class="game-line">
+							<span class="tree-icon">{isLast ? '└─' : '├─'}</span>
+							<span class="game-name" title={game.name}>
+								{game.name}
+							</span>
+							<span class="game-stats">
+								{game.hours}h &nbsp;|&nbsp; {game.done}/{game.total} 🏆︎
+							</span>
+						</div>
+						<div class="bar-wrap">
+							<div class="bar-bg" style="flex:1">
+								<div class="bar-fill" style={`width:${game.pct}%`} />
+							</div>
+							<span class="bar-pct">{game.pct}%</span>
+						</div>
+					</div>
+				);
+			})
+		)
+	}
+</div>

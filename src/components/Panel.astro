@@ -1,0 +1,19 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<div class="panel">
+	<div class="panel-header">
+		{title}
+		<div class="dots">
+			<span class="d1"></span><span class="d2"></span><span class="d3"></span>
+		</div>
+	</div>
+	<div class="panel-body">
+		<slot />
+	</div>
+</div>

@@ -1,0 +1,9 @@
+---
+import Panel from './Panel.astro';
+import { map } from '../data/site';
+---
+
+<Panel title="map.png">
+	<div class="flag-row">{map.phoneMasked}</div>
+	<img class="map-img" src={map.image} alt="map" />
+</Panel>

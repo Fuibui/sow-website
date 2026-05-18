@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Panel from '../../components/Panel.astro';
+import TerminalPrompt from '../../components/TerminalPrompt.astro';
+import { blogDates, blogDayLog } from '../../data/site';
+
+const activeDateId = blogDates[0]?.id;
+---
+
+<Layout title="sow.lol — blog">
+	<div class="container blog-grid">
+		<div class="left-col">
+			<Panel title="dates.json">
+				<ul class="blog-dates plain">
+					{
+						blogDates.length === 0 ? (
+							<li class="blog-empty">no dates yet.</li>
+						) : (
+							blogDates.map((entry) => (
+								<li class={entry.id === activeDateId ? 'active' : ''}>
+									<a href={`/blog#${entry.id}`}>{entry.label}</a>
+								</li>
+							))
+						)
+					}
+				</ul>
+			</Panel>
+		</div>
+
+		<div class="right-col">
+			<Panel title="day.log">
+				<TerminalPrompt command={blogDayLog.command} />
+				<p class="about-val blog-empty">{blogDayLog.content}</p>
+			</Panel>
+		</div>
+	</div>
+</Layout>
