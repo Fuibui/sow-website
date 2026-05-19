@@ -1,25 +1,15 @@
 ---
 import Panel from './Panel.astro';
-import {
-	getAvatarUrl,
-	getDisplayName,
-	statusColors,
-	type LanyardPresence,
-} from '../lib/discord';
+import { statusColors } from '../lib/discord';
 
 interface Props {
 	discordUserId: string;
-	presence: LanyardPresence | null;
 	error?: string | null;
 }
 
-const { discordUserId, presence, error = null } = Astro.props;
+const { discordUserId, error = null } = Astro.props;
 
-const statusColor = presence
-	? statusColors[presence.discord_status]
-	: statusColors.offline;
-const avatarUrl = presence ? getAvatarUrl(presence.discord_user) : null;
-const username = presence ? `@${getDisplayName(presence.discord_user)}` : '@loading';
+const statusColor = statusColors.offline;
 ---
 
 <Panel title="image.png">
@@ -34,7 +24,7 @@ const username = presence ? `@${getDisplayName(presence.discord_user)}` : '@load
 					<img
 						id="pfp-src"
 						crossorigin="anonymous"
-						src={avatarUrl ?? undefined}
+						src=""
 						alt=""
 						width="256"
 						height="256"
@@ -44,17 +34,54 @@ const username = presence ? `@${getDisplayName(presence.discord_user)}` : '@load
 			)
 		}
 	</div>
-	<div id="discord-username" class="discord-name">{username}</div>
+	<div id="discord-username" class="discord-name">@loading</div>
 	<div class="discord-sub">on Discord</div>
 </Panel>
 
 <script>
+	import {
+		fetchLanyardPresence,
+		getAvatarUrl,
+		getDisplayName,
+		statusColors,
+		type LanyardPresence,
+	} from '../lib/discord';
 	import { initLanyard } from '../scripts/lanyard-client';
-	import { initPfpCanvas } from '../scripts/pfp-canvas';
+	import { initPfpCanvas, setPfpSource } from '../scripts/pfp-canvas';
+
+	function applyPresence(presence: LanyardPresence) {
+		const username = document.getElementById('discord-username');
+		const statusDot = document.getElementById('status-dot');
+
+		setPfpSource(getAvatarUrl(presence.discord_user));
+
+		if (username) {
+			username.textContent = `@${getDisplayName(presence.discord_user)}`;
+		}
+
+		if (statusDot) {
+			statusDot.style.background =
+				statusColors[presence.discord_status] ?? statusColors.offline;
+		}
+	}
 
 	initPfpCanvas();
 
 	const root = document.getElementById('profile-card');
 	const id = root?.dataset.discordId;
-	if (id) initLanyard(id);
+
+	if (id) {
+		fetchLanyardPresence(id)
+			.then((presence) => {
+				if (presence) applyPresence(presence);
+			})
+			.catch((err) => {
+				const username = document.getElementById('discord-username');
+				const message =
+					err instanceof Error ? err.message : 'failed to load discord profile.';
+				if (username) username.textContent = message;
+			});
+
+		initLanyard(id);
+	}
 </script>

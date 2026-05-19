@@ -1,14 +1,6 @@
 ---
 import TerminalPrompt from './TerminalPrompt.astro';
-import GamesTree from './GamesTree.astro';
 import type { SteamGame } from '../lib/steam';
-
-interface Props {
-	games: SteamGame[];
-	error?: string | null;
-}
-
-const { games, error = null } = Astro.props;
 ---
 
 <div class="right-bottom panel">
@@ -20,14 +12,74 @@ const { games, error = null } = Astro.props;
 	</div>
 	<div class="panel-body">
 		<TerminalPrompt command="./games_tree.js" prefix="sow@sow:~/steam-stats$" />
-		{
-			error ? (
-				<div class="tree-root">
-					<span class="error-line">{error}</span>
-				</div>
-			) : (
-				<GamesTree games={games} />
-			)
-		}
+		<div id="steam-games-root" class="tree-root">
+			<span class="error-line">loading steam stats…</span>
+		</div>
 	</div>
 </div>
+
+<script>
+	import type { SteamGame } from '../lib/steam';
+
+	function escapeHtml(text: string): string {
+		return text
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;');
+	}
+
+	function renderGames(games: SteamGame[]): string {
+		if (games.length === 0) {
+			return '<span class="error-line">no games found.</span>';
+		}
+
+		return games
+			.map((game, index) => {
+				const isLast = index === games.length - 1;
+				const name = escapeHtml(game.name);
+				return `<div class="branch">
+						<div class="game-line">
+							<span class="tree-icon">${isLast ? '└─' : '├─'}</span>
+							<span class="game-name" title="${name}">${name}</span>
+							<span class="game-stats">${game.hours}h &nbsp;|&nbsp; ${game.done}/${game.total} 🏆︎</span>
+						</div>
+						<div class="bar-wrap">
+							<div class="bar-bg" style="flex:1">
+								<div class="bar-fill" style="width:${game.pct}%"></div>
+							</div>
+							<span class="bar-pct">${game.pct}%</span>
+						</div>
+					</div>`;
+			})
+			.join('');
+	}
+
+	const root = document.getElementById('steam-games-root');
+	if (!root) throw new Error('steam-games-root not found');
+
+	fetch('/api/steam')
+		.then(async (res) => {
+			const data = (await res.json()) as {
+				games?: SteamGame[];
+				error?: string;
+			};
+
+			if (!res.ok) {
+				root.innerHTML = `<span class="error-line">${escapeHtml(data.error ?? 'failed to load steam stats.')}</span>`;
+				return;
+			}
+
+			if (data.error) {
+				root.innerHTML = `<span class="error-line">${escapeHtml(data.error)}</span>`;
+				return;
+			}
+
+			root.innerHTML = renderGames(data.games ?? []);
+		})
+		.catch((err) => {
+			const message =
+				err instanceof Error ? err.message : 'failed to load steam stats.';
+			root.innerHTML = `<span class="error-line">${escapeHtml(message)}</span>`;
+		});
+</script>

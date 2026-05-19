@@ -5,39 +5,10 @@ import ProfileShPanel from '../components/ProfileShPanel.astro';
 import AboutPanel from '../components/AboutPanel.astro';
 import MapPanel from '../components/MapPanel.astro';
 import SteamGamesPanel from '../components/SteamGamesPanel.astro';
-import { fetchLanyardPresence } from '../lib/discord';
-import { fetchSteamGames } from '../lib/steam';
 
 const discordUserId = import.meta.env.DISCORD_USER_ID;
-const steamApiKey = import.meta.env.STEAM_API_KEY;
-const steamId = import.meta.env.STEAM_ID;
 
-let presence = null;
-let discordError: string | null = null;
-
-if (!discordUserId) {
-	discordError = 'DISCORD_USER_ID not set in .env';
-} else {
-	try {
-		presence = await fetchLanyardPresence(discordUserId);
-	} catch (err) {
-		discordError = err instanceof Error ? err.message : 'failed to load discord profile.';
-	}
-}
-
-let steamGames = [];
-let steamError: string | null = null;
-
-if (!steamApiKey || !steamId) {
-	steamError = 'STEAM_API_KEY / STEAM_ID not set in .env';
-} else {
-	try {
-		steamGames = await fetchSteamGames();
-		if (!steamGames.length) steamError = 'no games with achievements found.';
-	} catch (err) {
-		steamError = err instanceof Error ? err.message : 'failed to load steam stats.';
-	}
-}
+const discordError = !discordUserId ? 'DISCORD_USER_ID not set in .env' : null;
 ---
 
 <Layout>
@@ -45,7 +16,6 @@ if (!steamApiKey || !steamId) {
 		<div class="left-col">
 			<ProfileCard
 				discordUserId={discordUserId ?? ''}
-				presence={presence}
 				error={discordError}
 			/>
 			<ProfileShPanel />
@@ -56,6 +26,6 @@ if (!steamApiKey || !steamId) {
 			<MapPanel />
 		</div>
 
-		<SteamGamesPanel games={steamGames} error={steamError} />
+		<SteamGamesPanel />
 	</div>
 </Layout>
